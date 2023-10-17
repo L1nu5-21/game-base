@@ -1,7 +1,7 @@
-export default class projectile {
-    constructor(game, x, y) {
-        this.game = game
-        this.width = 4
+export default class Projectile {
+    constructor(Game, x, y) {
+        this.Game = Game
+        this.width = 6
         this.height = 4
         this.x = x
         this.y = y
@@ -13,7 +13,7 @@ export default class projectile {
 
     update() {
         this.x += this.speed
-        if (this.x > this.game.width) {
+        if (this.x > this.Game.width) {
             this.markedForDeletion = true
         }
     }
