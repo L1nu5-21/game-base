@@ -1,8 +1,8 @@
 import Projectile from "./Projectile"
 
 export default class Player {
-    constructor(game) {
-        this.game = game
+    constructor(Game) {
+        this.Game = Game
         this.width = 32
         this.height = 64
         this.x = 50
@@ -14,21 +14,27 @@ export default class Player {
         this.color = '#f36'
         this.projectiles = []
         this.shootTimer = 3
+        this.grounded = false
+        this.jumpSpeed = 30
         
     }
 
     update(deltaTime) {
-        if (this.game.keys.includes('w') && this.y > 0) {
-            this.speedY = -this.maxSpeed
-        } else if (this.game.keys.includes('s') && this.y < this.game.height - this.height) {
-            this.speedY = this.maxSpeed
-        } else if (this.game.keys.includes('a') && this.x > 0) {
+        
+        if (this.Game.keys.includes('w')) {
+            this.jump()
+        } else if (this.Game.keys.includes('a') && this.x > 0) {
             this.speedX = -this.maxSpeed
-        } else if (this.game.keys.includes('d') && this.x < this.game.width - this.width) {
+        } else if (this.Game.keys.includes('d') && this.x < this.Game.width - this.width) {
             this.speedX = this.maxSpeed
         } else {
             this.speedY = 0
             this.speedX = 0
+        }
+        if (this.grounded) {
+            this.speedY = 0
+        } else {
+            this.speedY += this.Game.gravity
         }
         this.x += this.speedX
 
@@ -53,6 +59,13 @@ export default class Player {
     }
 
     shoot() {
-        this.projectiles.push(new Projectile( this.game, this.x + this.width, this.y + this.height/2) )
+        this.projectiles.push(new Projectile( this.Game, this.x + this.width, this.y + this.height/2) )
+    }
+
+    jump() {
+        if (this.grounded) {
+            this.speedY = -this.jumpSpeed
+            this.grounded = false
+        }
     }
 }
