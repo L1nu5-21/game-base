@@ -12,6 +12,11 @@ export default class InputHandler {
             if (event.key === 'p') {
                 this.Game.debug = !this.Game.debug
             }
+            if (event.key === 'h') {
+                if(this.Game.debug) {
+                    this.Game.addHealthPot()
+                }
+            }
             if (event.key === ' ') {
                 this.Game.Player.shoot()
             }

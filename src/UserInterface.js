@@ -27,8 +27,10 @@ export default class UserInterface {
         if (this.Game.debug) {
             context.textAllign = 'left'
             context.font = `${this.fontSize}px ${this.fontFamily}`
-            context.fillText(`X: ${(this.Game.Player.x)}`, this.Game.width - 80, 100)
-            context.fillText(`Y: ${(this.Game.Player.y)}`, this.Game.width - 80, 130)
+            context.fillText(`X: ${(this.Game.Player.x)}`, this.Game.width - 80, 40)
+            context.fillText(`Y: ${(this.Game.Player.y)}`, this.Game.width - 80, 70)
+            context.fillText(`Ammo: ${(this.Game.Player.ammo)}`, this.Game.width - 137, 100)
+            context.fillText(`Grounded: ${(this.Game.Player.grounded)}`, this.Game.width - 175, 130)
         }
 
         context.restore()

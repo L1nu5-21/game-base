@@ -3,6 +3,7 @@ import InputHandler from "./InputHandler"
 import UserInterface from "./UserInterface"
 import Slime from "./Slime"
 import Platform from "./Platfrom"
+import HealthPot from "./HealthPot"
 
 export default class Game {
   constructor(width, height) {
@@ -16,7 +17,11 @@ export default class Game {
     this.platforms = [
       new Platform(this, 0, this.ground, this.width, 100),
       new Platform(this, this.width - 200, 280, 200, 20),
-      new Platform(this, 200, 200, 300, 20)
+      new Platform(this, this.width - 200, 100, 200, 20),
+      new Platform(this, this.width - 200, 380, 200, 20),
+      new Platform(this, 200, 200, 300, 20),
+      new Platform(this, 0, 250, 100, 20),
+      new Platform(this, 0, 100, 100, 20)
     ]
     
 
@@ -28,7 +33,7 @@ export default class Game {
 
     this.gameTime = 0
     this.gameOver = false
-    this.gravity = 5
+    this.gravity = 2
     this.debug = false
     this.score = 0
 
@@ -57,8 +62,10 @@ export default class Game {
     this.enemies.forEach((Enemy) => {
       Enemy.update(deltaTime)
       if (this.checkCollision(this.Player, Enemy)) {
+        if (Enemy.healthUp && this.Player.hitPoints < 10) this.Player.hitPoints += Enemy.healthUp
+        if (this.Player.hitPoints > 10) this.Player.hitPoints = 10
         Enemy.markedForDeath = true
-        this.Player.hitPoints--
+        this.Player.hitPoints -= Enemy.damage
       }
       this.Player.projectiles.forEach((Projectile) => {
         if (this.checkCollision(Projectile, Enemy)) {
@@ -87,22 +94,27 @@ export default class Game {
       }
       this.enemies.forEach((Enemy) => {
         if (this.checkPlatformCollision(Enemy, Platform)) {
-          Enemy.speedY = 0
+          //Enemy.speedY = 0
           Enemy.y = Platform.y - Enemy.height
+          Enemy.grounded = true
         }
       })
     })
   }
 
   draw(context) {
-    this.Player.draw(context)
-    this.UserInterface.draw(context)
     this.enemies.forEach((Enemy) => Enemy.draw(context))
     this.platforms.forEach((Platform) => Platform.draw(context))
+    this.Player.draw(context)
+    this.UserInterface.draw(context)
   }
 
   addEnemy() {
     this.enemies.push(new Slime(this))
+  }
+
+  addHealthPot() {
+    this.enemies.push(new HealthPot(this))
   }
 
   checkCollision(hitbox1, hitbox2) {

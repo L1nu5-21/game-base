@@ -13,14 +13,14 @@ export default class Player {
         this.hitPoints = 5
         this.color = '#f36'
         this.projectiles = []
+        this.ammo = 10
         this.shootTimer = 3
         this.grounded = false
-        this.jumpSpeed = 30
+        this.jumpSpeed = 25
         
     }
 
     update(deltaTime) {
-        
         if (this.Game.keys.includes('w')) {
             this.jump()
         } else if (this.Game.keys.includes('a') && this.x > 0) {
@@ -37,7 +37,6 @@ export default class Player {
             this.speedY += this.Game.gravity
         }
         this.x += this.speedX
-
         this.y += this.speedY
 
         this.projectiles.forEach((Projectile) => {
@@ -46,7 +45,6 @@ export default class Player {
         this.projectiles = this.projectiles.filter(
             (Projectile) => !Projectile.markedForDeletion
         )
-
     }
 
     draw(context) {
@@ -55,7 +53,7 @@ export default class Player {
 
         this.projectiles.forEach((Projectile) => {
             Projectile.draw(context)
-        }) 
+        })
     }
 
     shoot() {
