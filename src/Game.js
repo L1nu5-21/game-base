@@ -16,12 +16,7 @@ export default class Game {
     this.keys = []
     this.platforms = [
       new Platform(this, 0, this.ground, this.width, 100),
-      new Platform(this, this.width - 200, 280, 200, 20),
-      new Platform(this, this.width - 200, 100, 200, 20),
-      new Platform(this, this.width - 200, 380, 200, 20),
-      new Platform(this, 200, 200, 300, 20),
-      new Platform(this, 0, 250, 100, 20),
-      new Platform(this, 0, 100, 100, 20)
+      new Platform(this, 200, 300, 100, 50)
     ]
     
 
