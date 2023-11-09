@@ -2,7 +2,7 @@
 
 ## Prioriterings planering
 
-### Bättre collision/platformar, a.k.a fixa platforms + borders. (0.21 lektioner.)
+### Better collision/platforms, a.k.a fixa platforms + borders. (0.21 lektioner.)
     Fixa så att platformarna faktiskt sätter om du är grounded eller inte.
     Fixa så att man inte kan falla utanför skärmen.
 
@@ -24,4 +24,4 @@ Extra arbete egentligen.
 
 `"buh, what are we doin' here?"`
 
-`Buy more baguettes!`
+`To buy more baguettes!`

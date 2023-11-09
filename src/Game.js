@@ -4,12 +4,14 @@ import UserInterface from "./UserInterface"
 import Slime from "./Slime"
 import Platform from "./Platfrom"
 import HealthPot from "./HealthPot"
+import Background from "./Background"
 
 export default class Game {
   constructor(width, height) {
     this.width = width
     this.height = height
     this.ground = this.height - 30
+    this.background = new Background
     
     
     
@@ -77,8 +79,6 @@ export default class Game {
       }
     })
 
-    
-
     this.enemies = this.enemies.filter((Enemy) => !Enemy.markedForDeath)
 
     this.platforms.forEach((Platform) => {
@@ -95,6 +95,8 @@ export default class Game {
         }
       })
     })
+
+    this.background.update(deltaTime)
   }
 
   draw(context) {
@@ -102,6 +104,7 @@ export default class Game {
     this.platforms.forEach((Platform) => Platform.draw(context))
     this.Player.draw(context)
     this.UserInterface.draw(context)
+    this.background.draw(context)
   }
 
   addEnemy() {
