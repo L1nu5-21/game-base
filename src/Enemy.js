@@ -10,6 +10,16 @@ export default class Enemy {
         this.height = 20
         this.grounded = false
         this.damage = 0
+        this.hitPoints = 1
+
+        this.frameX = 0
+        this.frameY = 1
+        this.maxFrame = 6
+        this.fps = 30
+        this.timer = 0
+        this.interval = 1000 / this.fps
+        this.runFrames = 3
+        this.idleFrames = 1
     }
 
     update() {
@@ -22,11 +32,22 @@ export default class Enemy {
     }
 
     draw(context) {
-        context.fillStyle = '#0f0'
-        context.fillRect(this.x, this.y, this.width, this.height)
+        context.drawImage(
+            this.image,
+            this.frameX * this.width,
+            this.frameY * this.height,
+            this.width,
+            this.height,
+            this.flip ? this.x * -1 - this.width : this.x,
+            this.y,
+            this.width,
+            this.height
+        )
+      
+        context.restore()
 
         if (this.Game.debug) {
-            context.fillStyle = 'black'
+            context.fillStyle = 'white'
             context.strokeRect(this.x, this.y, this.width, this.height)
             context.font = '12px Arial'
             context.fillText(`x: ${this.x.toFixed()}`, this.x + 20, this.y - 5)

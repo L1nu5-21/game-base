@@ -1,4 +1,5 @@
 import Projectile from "./Projectile"
+import spriteImage from './assets/css/assets/joshua/Kopia av player sprites.png'
 
 export default class Player {
     constructor(Game) {
@@ -7,35 +8,55 @@ export default class Player {
         this.height = 64
         this.x = 50
         this.y = 100
-        this.speedX = 4
-        this.speedY = 4
-        this.maxSpeed = 8
-        this.hitPoints = 5
         this.color = '#f36'
+
+        this.speedX = 1
+        this.speedY = 0
+        this.maxSpeed = 8
+        this.grounded = false
+        this.jumpSpeed = 40
+        
+        this.hitPoints = 5
         this.projectiles = []
         this.ammo = 10
         this.shootTimer = 3
-        this.grounded = false
-        this.jumpSpeed = 25
+
+        const image = new Image()
+        image.src = spriteImage
+        this.image = image
         
+        this.frameX = 0
+        this.frameY = 1
+        this.maxFrame = 6
+        this.fps = 40
+        this.timer = 0
+        this.interval = 1000 / this.fps
+        this.runFrames = 3
+        this.idleFrames = 1
+
+        this.flip = false
     }
 
     update(deltaTime) {
-        if (this.Game.keys.includes('w')) {
-            this.jump()
-        } else if (this.Game.keys.includes('a') && this.x > 0) {
-            this.speedX = -this.maxSpeed
-        } else if (this.Game.keys.includes('d') && this.x < this.Game.width - this.width) {
-            this.speedX = this.maxSpeed
-        } else {
-            this.speedY = 0
-            this.speedX = 0
-        }
         if (this.grounded) {
             this.speedY = 0
         } else {
             this.speedY += this.Game.gravity
         }
+        if (this.Game.keys.includes('w')) {
+            this.jump()
+        }
+        
+        if (this.Game.keys.includes('a') && this.x > 0) {
+            this.speedX = -this.maxSpeed
+        } else 
+            if (this.Game.keys.includes('d') && this.x < this.Game.width - this.width) {
+                this.speedX = this.maxSpeed
+        } else {
+            this.speedX = 0
+        }
+        
+
         this.x += this.speedX
         this.y += this.speedY
 
@@ -45,15 +66,48 @@ export default class Player {
         this.projectiles = this.projectiles.filter(
             (Projectile) => !Projectile.markedForDeletion
         )
+        this.timer++
+
+        if (this.speedX !== 0) {
+            if (this.speedX < 0) this.flip = true
+            else if (this.speedX > 0) this.flip = false
+            this.frameY = 0
+            this.maxFrame = this.runFrames
+            } else {
+            this.maxFrame = this.idleFrames
+            this.frameY = 1
+            }
+            if (this.timer > this.interval) {
+                this.frameX++
+                this.timer = 0
+            }
+            if (this.frameX > this.maxFrame) {
+                this.frameX = 0
+          }
     }
 
     draw(context) {
-        context.fillStyle = this.color
-        context.fillRect(this.x, this.y, this.width, this.height)
-
         this.projectiles.forEach((Projectile) => {
             Projectile.draw(context)
         })
+        if (this.flip) {
+            context.save()
+            context.scale(-1, 1)
+        }
+      
+        context.drawImage(
+            this.image,
+            this.frameX * this.width,
+            this.frameY * this.height,
+            this.width,
+            this.height,
+            this.flip ? this.x * -1 - this.width : this.x,
+            this.y,
+            this.width,
+            this.height
+        )
+      
+        context.restore()
     }
 
     shoot() {
@@ -63,7 +117,6 @@ export default class Player {
     jump() {
         if (this.grounded) {
             this.speedY = -this.jumpSpeed
-            this.grounded = false
         }
     }
 }
