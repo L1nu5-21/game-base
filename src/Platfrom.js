@@ -3,9 +3,11 @@ export default class Platform {
         this.Game = Game
         this.width = width
         this.height = height
+        this.colour = 'white'
         this.x = x
         this.y = y
         this.idNum = idNum
+        this.isTangible = true
     }
 
     update() {
@@ -13,7 +15,7 @@ export default class Platform {
     }
 
     draw(context) {
-        context.fillStyle = '#795548'
+        context.fillStyle = this.colour
         context.fillRect(this.x, this.y, this.width, this.height)
 
         if (this.Game.debug) {

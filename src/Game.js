@@ -1,10 +1,11 @@
 import Player from "./Player"
 import InputHandler from "./InputHandler"
 import UserInterface from "./UserInterface"
-import Slime from "./Slime"
+import Pumpkin from "./Pumpkin"
 import Platform from "./Platfrom"
 import HealthPot from "./HealthPot"
 import Background from "./Background"
+import Bouncepad from "./Bouncepad"
 
 export default class Game {
   constructor(width, height) {
@@ -13,14 +14,14 @@ export default class Game {
     this.ground = this.height - 30
     this.background = new Background(this)
     
-    
-    
+
+
     this.keys = []
     this.platforms = [
       new Platform(this, 0, this.ground, this.width, 100, 1),
-      new Platform(this, 0, 280, 300, 20, 4),
-      new Platform(this, this.width - 200, 280, 200, 20, 2),
-      new Platform(this, 320, 150, 300, 20, 3)
+      new Platform(this, 0, 280, 200, 20, 2),
+      new Platform(this, this.width - 200, 280, 200, 20, 3),
+      new Platform(this, this.width/2 - 150, 150, 300, 20, 4)
     ]
     
 
@@ -28,10 +29,12 @@ export default class Game {
     this.enemies = []
     this.enemyTimer = 0
     this.enemyInterval = 1000
+    this.pog = 0
 
 
     this.gameTime = 0
     this.gameOver = false
+    this.paused = true
     this.gravity = 5
     this.debug = false
     this.score = 0
@@ -43,43 +46,31 @@ export default class Game {
   }
 
   update(deltaTime) {
-    if (!this.gameOver) {
+    if (!this.paused && !this.gameOver) {
       this.gameTime += deltaTime
+      this.Player.update(deltaTime)
     }
 
 
-    this.Player.update(deltaTime)
-    this.Player.projectiles.forEach((Projectile) => {
-      Projectile.update()
-    })
 
-
-    if (this.enemyTimer > this.enemyInterval && !this.gameOver && !this.debug) {
-      this.addEnemy()
+    if (this.enemyTimer > this.enemyInterval && this.enemies.length < 4 && !this.paused && !this.gameOver && !this.debug) {
+      this.pog = Math.floor(Math.random()*4)
+      this.addEnemy(this.platforms[this.pog].x + (this.platforms[this.pog].width - this.Player.width)/2, this.platforms[this.pog].y)
       this.enemyTimer = 0
     } else {
       this.enemyTimer += deltaTime
     }
 
     this.enemies.forEach((Enemy) => {
-      Enemy.update(deltaTime)
+      if (!this.paused && !this.gameOver) Enemy.update(deltaTime)
       if (this.checkCollision(this.Player, Enemy)) {
         if (Enemy.healthUp && this.Player.hitPoints < 10) this.Player.hitPoints += Enemy.healthUp
         if (this.Player.hitPoints > 10) this.Player.hitPoints = 10
         Enemy.markedForDeath = true
         this.Player.hitPoints -= Enemy.damage
+        this.score += 1
       }
-      this.Player.projectiles.forEach((Projectile) => {
-        if (this.checkCollision(Projectile, Enemy)) {
-          Enemy.hitPoints -= Projectile.damage
-          if (Enemy.hitPoints <= 0) {
-            Enemy.markedForDeath = true
-            this.score++
-          }
-          Projectile.markedForDeletion = true
-        }
-      })
-      if(this.Player.hitPoints <= 0) {
+      if(this.deltaTime >= 60) {
         this.gameOver = true
       }
     })
@@ -103,6 +94,10 @@ export default class Game {
           Enemy.speedY = 0
           Enemy.grounded = true
           Enemy.y = Platform.y - Enemy.height
+
+          if (Enemy.x < Platform.x && Enemy.speedX || Enemy.x + Enemy.width > Platform.x + Platform.width && Enemy.speedX > 0) {
+            Enemy.speedX *= -1
+          }
         }
       })
     })
@@ -116,8 +111,8 @@ export default class Game {
     this.UserInterface.draw(context)
   }
 
-  addEnemy() {
-    this.enemies.push(new Slime(this))
+  addEnemy(x, y) {
+    this.enemies.push(new Pumpkin(this, x, y))
   }
 
   addHealthPot() {

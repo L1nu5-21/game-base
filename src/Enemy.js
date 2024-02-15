@@ -22,13 +22,14 @@ export default class Enemy {
         this.idleFrames = 1
     }
 
-    update() {
+    update(deltaTime) {
         this.x += this.speedX
-        if (this.x < 0) this.markedForDeletion = true
+        
         if (!this.grounded) {
             this.speedY += this.Game.gravity
         }
-        this.y = this.speedY
+
+        this.y += this.speedY
     }
 
     draw(context) {

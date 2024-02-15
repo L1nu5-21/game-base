@@ -14,14 +14,19 @@ export default class UserInterface {
         context.shadowColor = 'black'
         context.textAllign = 'left'
         context.font = `${this.fontSize}px ${this.fontFamily}`
-        context.fillText(`HP: ${(this.Game.Player.hitPoints)}`, 20, 40)
-        context.fillText(`Time: ${(this.Game.gameTime * 0.001).toFixed(1)}`, 20, 70)
-        context.fillText(`Score: ${this.Game.score}`, 20, 100)
+        context.fillText(`Time: ${(this.Game.gameTime * 0.001).toFixed(1)}`, 20, 40)
+        context.fillText(`Score: ${this.Game.score}`, 20, 70)
 
         if (this.Game.gameOver) {
             context.textAllign = 'center'
             context.font = `50px ${this.fontFamily}`
             context.fillText('Game Over', this.Game.width / 2, this.Game.height / 2)
+        }
+
+        if (this.Game.paused && !this.Game.gameOver) {
+            context.textAllign = 'center'
+            context.font = `20px ${this.fontFamily}`
+            context.fillText('Walk with A&D and jump with Space.', this.Game.width / 2 - 200, this.Game.height / 2)
         }
 
         if (this.Game.debug) {

@@ -1,8 +1,8 @@
 import Enemy from "./Enemy";
 import spriteImage from './assets/css/assets/joshua/Kopia av pumkin sprites.png'
 
-export default class Pumpkin extends Enemy {
-    constructor (Game, x, y) {
+export default class Pumpkin2 extends Enemy {
+    constructor(Game, x, y) {
         super(Game)
         this.hitPoints = 1
         this.width = 30
@@ -10,7 +10,7 @@ export default class Pumpkin extends Enemy {
         this.x = x
         this.y = y
         this.speedX = 4
-        this.speedY = 0
+        this.speedy = 0
         this.damage = 0
 
         const image = new Image()
@@ -18,11 +18,11 @@ export default class Pumpkin extends Enemy {
         this.image = image
     }
 
-    draw(context) {
+    draw() {
         context.drawImage(
             this.image,
-            this.frameX * this.width +2,
-            this.frameY * this.height +2,
+            this.frameX * this.width,
+            this.frameY * this.height,
             this.width,
             this.height,
             this.flip ? this.x * -1 - this.width : this.x,

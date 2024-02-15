@@ -16,11 +16,6 @@ export default class Player {
         this.grounded = false
         this.jumpSpeed = 40
         
-        this.hitPoints = 5
-        this.projectiles = []
-        this.ammo = 10
-        this.shootTimer = 3
-
         const image = new Image()
         image.src = spriteImage
         this.image = image
@@ -43,7 +38,7 @@ export default class Player {
         } else {
             this.speedY += this.Game.gravity
         }
-        if (this.Game.keys.includes('w')) {
+        if (this.Game.keys.includes(' ')) {
             this.jump()
         }
         
@@ -60,12 +55,6 @@ export default class Player {
         this.x += this.speedX
         this.y += this.speedY
 
-        this.projectiles.forEach((Projectile) => {
-            Projectile.update
-        })
-        this.projectiles = this.projectiles.filter(
-            (Projectile) => !Projectile.markedForDeletion
-        )
         this.timer++
 
         if (this.speedX !== 0) {
@@ -87,9 +76,6 @@ export default class Player {
     }
 
     draw(context) {
-        this.projectiles.forEach((Projectile) => {
-            Projectile.draw(context)
-        })
         if (this.flip) {
             context.save()
             context.scale(-1, 1)
@@ -108,10 +94,6 @@ export default class Player {
         )
       
         context.restore()
-    }
-
-    shoot() {
-        this.projectiles.push(new Projectile( this.Game, this.x + this.width, this.y + this.height/2) )
     }
 
     jump() {

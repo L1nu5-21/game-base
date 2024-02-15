@@ -5,21 +5,25 @@ export default class InputHandler {
             if ((event.key === 'w' 
             ||event.key === 'a' 
             || event.key === 's' 
-            || event.key === 'd') && 
+            || event.key === 'd'
+            || event.key === ' ') && 
             this.Game.keys.indexOf(event.key) === -1) {
                 this.Game.keys.push(event.key)
             }
-            if (event.key === 'p') {
-                this.Game.debug = !this.Game.debug
-            }
+            
+            if (event.key === 'p') this.Game.debug = !this.Game.debug
+            
             if (event.key === 'h') {
                 if(this.Game.debug) {
                     this.Game.addHealthPot()
                 }
             }
-            if (event.key === ' ') {
-                this.Game.Player.shoot()
+            
+            if (event.key === 'y') {
+                if (this.Game.paused) this.Game.paused = false
+                else this.Game.paused = true
             }
+            
         })
 
         window.addEventListener('keyup', (event) => {
