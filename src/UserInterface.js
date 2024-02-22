@@ -18,15 +18,15 @@ export default class UserInterface {
         context.fillText(`Score: ${this.Game.score}`, 20, 70)
 
         if (this.Game.gameOver) {
-            context.textAllign = 'center'
             context.font = `50px ${this.fontFamily}`
-            context.fillText('Game Over', this.Game.width / 2, this.Game.height / 2)
+            context.fillText('Game Over', this.Game.width / 2 - 150, this.Game.height / 2)
+            context.font = `20px ${this.fontFamily}`
+            context.fillText(`Your score was ${this.Game.score} points!`, this.Game.width / 2 - 170, this.Game.height / 2 + 50)
         }
 
         if (this.Game.paused && !this.Game.gameOver) {
-            context.textAllign = 'center'
             context.font = `20px ${this.fontFamily}`
-            context.fillText('Walk with A&D and jump with Space.', this.Game.width / 2 - 200, this.Game.height / 2)
+            context.fillText('Move with a & d and jump with Space.', this.Game.width / 2 - 170, this.Game.height / 2)
         }
 
         if (this.Game.debug) {
@@ -34,9 +34,7 @@ export default class UserInterface {
             context.font = `${this.fontSize}px ${this.fontFamily}`
             context.fillText(`X: ${(this.Game.Player.x)}`, this.Game.width - 80, 40)
             context.fillText(`Y: ${(this.Game.Player.y)}`, this.Game.width - 80, 70)
-            context.fillText(`Ammo: ${(this.Game.Player.ammo)}`, this.Game.width - 137, 100)
             context.fillText(`Grounded: ${(this.Game.Player.grounded)}`, this.Game.width - 175, 130)
-            context.fillText(`groundY: ${(this.Game.Player.y + this.Game.Player.height)}`, this.Game.width - 175, 160)
         }
 
         context.restore()

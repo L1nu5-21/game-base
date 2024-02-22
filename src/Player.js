@@ -7,7 +7,7 @@ export default class Player {
         this.width = 32
         this.height = 64
         this.x = 50
-        this.y = 100
+        this.y = 280
         this.color = '#f36'
 
         this.speedX = 1

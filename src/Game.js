@@ -5,13 +5,12 @@ import Pumpkin from "./Pumpkin"
 import Platform from "./Platfrom"
 import HealthPot from "./HealthPot"
 import Background from "./Background"
-import Bouncepad from "./Bouncepad"
 
 export default class Game {
   constructor(width, height) {
     this.width = width
     this.height = height
-    this.ground = this.height - 30
+    this.ground = this.height - 50
     this.background = new Background(this)
     
 
@@ -53,7 +52,7 @@ export default class Game {
 
 
 
-    if (this.enemyTimer > this.enemyInterval && this.enemies.length < 4 && !this.paused && !this.gameOver && !this.debug) {
+    if (this.enemyTimer > this.enemyInterval && this.enemies.length < 6 && !this.paused && !this.gameOver) {
       this.pog = Math.floor(Math.random()*4)
       this.addEnemy(this.platforms[this.pog].x + (this.platforms[this.pog].width - this.Player.width)/2, this.platforms[this.pog].y)
       this.enemyTimer = 0
@@ -70,7 +69,7 @@ export default class Game {
         this.Player.hitPoints -= Enemy.damage
         this.score += 1
       }
-      if(this.deltaTime >= 60) {
+      if(this.gameTime >= 60*1000){
         this.gameOver = true
       }
     })

@@ -3,7 +3,7 @@ export default class Platform {
         this.Game = Game
         this.width = width
         this.height = height
-        this.colour = 'white'
+        this.colour = '#56310d'
         this.x = x
         this.y = y
         this.idNum = idNum
