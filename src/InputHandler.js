@@ -23,6 +23,10 @@ export default class InputHandler {
                 if (this.Game.paused) this.Game.paused = false
                 else this.Game.paused = true
             }
+
+            if (event.key === 'r') {
+                if (this.Game.gameOver || this.Game.debug || this.Game.paused) this.Game.restartGame()
+            }
             
         })
 

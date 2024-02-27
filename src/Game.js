@@ -18,9 +18,9 @@ export default class Game {
     this.keys = []
     this.platforms = [
       new Platform(this, 0, this.ground, this.width, 100, 1),
-      new Platform(this, 0, 280, 200, 20, 2),
-      new Platform(this, this.width - 200, 280, 200, 20, 3),
-      new Platform(this, this.width/2 - 150, 150, 300, 20, 4)
+      new Platform(this, 0, 280, 200, 10, 2),
+      new Platform(this, this.width - 200, 280, 200, 10, 3),
+      new Platform(this, this.width/2 - 150, 150, 300, 10, 4)
     ]
     
 
@@ -34,7 +34,7 @@ export default class Game {
     this.gameTime = 0
     this.gameOver = false
     this.paused = true
-    this.gravity = 5
+    this.gravity = 3
     this.debug = false
     this.score = 0
 
@@ -76,30 +76,36 @@ export default class Game {
 
     this.enemies = this.enemies.filter((Enemy) => !Enemy.markedForDeath)
 
-
-
     this.platforms.forEach((Platform) => {
       if (this.checkPlatformCollision(this.Player, Platform)) {
-        if (this.Player.speedY < 0 && this.Player.y + this.Player.height / 2 > Platform.y) {
+       // console.log(this.Player.speedY)
+       // console.log(this.Player.y + this.Player.height/2 > Platform.y)
+        if (this.Player.speedY < 0 && this.Player.y + this.Player.height/3 > Platform.y) {
           this.Player.y = Platform.y + Platform.height
+          this.Player.grounded = false
         } else {
-          this.Player.grounded = true
           this.Player.speedY = 0
           this.Player.y = Platform.y - this.Player.height
         }
       }
+
+
       this.enemies.forEach((Enemy) => {
         if (this.checkPlatformCollision(Enemy, Platform)) {
-          Enemy.speedY = 0
-          Enemy.grounded = true
-          Enemy.y = Platform.y - Enemy.height
-
-          if (Enemy.x < Platform.x && Enemy.speedX || Enemy.x + Enemy.width > Platform.x + Platform.width && Enemy.speedX > 0) {
-            Enemy.speedX *= -1
+          if (Enemy.speedY < 0 && Enemy.y + Enemy.height > Platform.y) {
+            Enemy.y = Platform.y + Platform.height
+            Enemy.grounded = false
+          } else {
+            Enemy.speedY = 0
+            Enemy.y = Platform.y - Enemy.height
           }
+
+          if (Enemy.x < Platform.x && Enemy.speedX && Enemy.grounded || Enemy.x + Enemy.width > Platform.x + Platform.width && Enemy.speedX > 0 && Enemy.grounded) Enemy.jump()
+          if(Enemy.x < 0 && Enemy.speedX || Enemy.x + Enemy.width > this.width && Enemy.speedX > 0) Enemy.speedX *= -1
         }
       })
     })
+    
   }
 
   draw(context) {
@@ -134,8 +140,6 @@ export default class Game {
       object.x <= platform.x + platform.width
     ) {
       if (!object.grounded && object.y + object.height > platform.y) {
-        object.speedY = 0
-        object.y = platform.y - object.height
         object.grounded = true
       }
       return true
@@ -145,5 +149,17 @@ export default class Game {
         }
       return false
     }
+  }
+
+  restartGame(){
+    this.Player.x = 50
+    this.Player.y = 280
+    this.Player.speedX = 0
+    this.Player.speedY = 0
+    this.enemies = []
+    this.gameTime = 0
+    this.gameOver = false
+    this.enemyTimer = 0
+    this.score = 0
   }
 }

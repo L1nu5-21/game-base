@@ -9,8 +9,9 @@ export default class Pumpkin extends Enemy {
         this.height = 30
         this.x = x
         this.y = y
-        this.speedX = 4
+        this.speedX = 8
         this.speedY = 0
+        this.jumpSpeed = 30
         this.damage = 0
 
         const image = new Image()
@@ -41,5 +42,9 @@ export default class Pumpkin extends Enemy {
           }
       
         context.restore()
+    }
+
+    jump() {
+        this.speedY += -this.jumpSpeed
     }
 }

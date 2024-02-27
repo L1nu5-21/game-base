@@ -14,7 +14,7 @@ export default class Player {
         this.speedY = 0
         this.maxSpeed = 8
         this.grounded = false
-        this.jumpSpeed = 40
+        this.jumpSpeed = 30
         
         const image = new Image()
         image.src = spriteImage
