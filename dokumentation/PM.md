@@ -41,13 +41,13 @@ Grundtanken för projektet var en sideview arcade platformer, likt Jump Man (Mar
 
 
 # Vad
-## Typ
+### Typ
 Sideview Arcade Platformer.
 
-## Krav
+### Krav
 I spelet ska man kunna springa och hoppa runt för att samla ihop så många pumpor som möjligt under en viss tidsperioden.
 
-## Teknik
+### Teknik
 För grunden för själva projektet så utgick jag ifrån Jens fantastiska grund benämnd "steg Mario.", detta gav mig en grund som tillåter för en spelkaraktär, även känd som en player, som kan röra sig i x-led och kunna hoppa i y-led. 
 
 Tillsamans med denna Player så har vi även platformar som våran karaktär kan manövera sig utöver. 
@@ -91,11 +91,11 @@ Härnäst går hand i hand med våra fiender, platformar, för att tillåta vår
 
 
 # Hur gick det?
-## Vad gick bra?
+### Vad gick bra?
 - I överlag skulle jag beskriva mitt hanterande av kodandet åtminstonde helt okej och i vissa delar faktiskt ganska bra.
 
 
-## Vad gick mindre bra?
+### Vad gick mindre bra?
 - Att kunna debuga koden och finna roten till olika problem sitter i framfoten till mina största problem med projektet. T.ex. så hakade jag upp mig på att lista ut varför platformarna kände för att inte anse att objekt som låg på toppen av dom var grundade, i slutendan så finns problemet typ fortfarande kvar i vissa fall så jag valde att sidogå problemet istället.
 
 
@@ -104,9 +104,9 @@ Härnäst går hand i hand med våra fiender, platformar, för att tillåta vår
 
 
 # Uppgiftsreview
-## Bra?
+### Bra?
 Uppgiften i överlag var ganska interesant och lärdomsful, vilket gjorde det lätt att arbeta med projektet. Shokerande nog så är det kul att arebeta med någonting där du kan skapa vad du vill.
 
 
-## Dåligt?
+### Dåligt?
 I det nuvariga läget så kan jag inte komma på något fel med själva upplägget av projektet i sig, d.v.s jag anser att uppläget i sig är åtminstonde helt okej och att de fel som jag träffade på istället berode på utomliggadne anledningar.
